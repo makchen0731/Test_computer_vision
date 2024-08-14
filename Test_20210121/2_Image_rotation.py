@@ -57,10 +57,11 @@ if __name__ == "__main__":
             y=image.shape[0] - 1 - i - original_centre_height                   
             x=image.shape[1] - 1 - j - original_centre_width 
      
-            new_y,new_x = shear(angle,x,y) #for usign tan
-            #new_y, new_x = shear_No_tan(angle,x,y) #did't useing tan
+            #new_y,new_x = shear(angle,x,y) #for usign tan
+            new_y, new_x = shear_No_tan(angle,x,y) #did't useing tan
             new_y = new_centre_height - new_y
             new_x = new_centre_width - new_x
             output[new_y,new_x]=image[i,j]  #writing the pixels to the new destination in the output image
 
-cv2.imwrite(r'C:\Users\user\Desktop\NTNU\desktop\Test_20210121\rotated_image1.png',output.astype(np.uint8))
+#cv2.imwrite(r'C:\Users\user\Desktop\NTNU\desktop\Test_20210121\rotated_image.png',output.astype(np.uint8))
+cv2.imwrite(r'C:\Users\user\Desktop\NTNU\desktop\Test_20210121\rotated_image.png1',output.astype(np.uint8))

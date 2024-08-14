@@ -28,16 +28,16 @@ def shear_No_tan(angle, x, y):
 
 image = cv2.imread(r"C:\Users\user\Desktop\Software\Python_3.12\git_test\Test_20210121\lena.bmp")[:,:,0]
 print(image.shape)
-angle = -int(input("Enter the angle :-")) # Ask the user to enter the angle of rotation
+angle = -int(input("Enter the angle :- "))                # Ask the user to enter the angle of rotation
 
-angle = math.radians(angle) #change angle to radian 弳度. 
+angle = math.radians(angle)
 cosine = math.cos(angle)
 sine = math.sin(angle)
 
-height = image.shape[0] #y top
-width = image.shape[1] #x top
+height = image.shape[0]                                   #define the height of the image
+width = image.shape[1]                                    #define the width of the image
 
-new_height  = round(abs(image.shape[0] * cosine) + abs(image.shape[1] * sine)) + 1 
+new_height  = round(abs(image.shape[0] * cosine) + abs(image.shape[1] * sine)) + 1
 new_width  = round(abs(image.shape[1] * cosine) + abs(image.shape[0] * sine)) + 1
 
 output = np.zeros((new_height, new_width))
@@ -53,21 +53,14 @@ if __name__ == "__main__":
     
     for i in range(height):
         for j in range(width):
-            #coordinates of pixel with respect to the centre of original image
+            #co-ordinates of pixel with respect to the centre of original image
             y=image.shape[0] - 1 - i - original_centre_height                   
-            x=image.shape[1] - 1 - j - original_centre_width
-
-            """
-            if didn't move to center, image will be like No move to center_rotated_image1
-            y=i             
-            x=j
-            """
-            
+            x=image.shape[1] - 1 - j - original_centre_width 
+     
+            new_y,new_x = shear(angle,x,y) #for usign tan
             #new_y, new_x = shear_No_tan(angle,x,y) #did't useing tan
-            new_y,new_x = shear(angle,x,y) #Usign tan
             new_y = new_centre_height - new_y
             new_x = new_centre_width - new_x
             output[new_y,new_x]=image[i,j]  #writing the pixels to the new destination in the output image
 
-#cv2.imwrite(r'C:\Users\user\Desktop\Software\Python_3.12\git_test\Test_20210121\rotated_image.png',output.astype(np.uint8))
 cv2.imwrite(r'C:\Users\user\Desktop\Software\Python_3.12\git_test\Test_20210121\rotated_image1.png',output.astype(np.uint8))

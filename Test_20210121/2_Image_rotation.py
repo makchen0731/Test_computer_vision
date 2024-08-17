@@ -81,7 +81,7 @@ if __name__ == "__main__":
             
     for u in range(new_height):
         for v in range(new_width):
-            if output[u,v] == 0 and u-1 >= 0 and v-1 >= 0 and u+1 <= 724 and v+1 <= 724:
+            if output[u,v] == 0 and u-1 >= 0 and v-1 >= 0 and u+1 <= new_height-1 and v+1 <= new_width-1:
                 output[u,v] = round((output[u+1,v] + output[u,v-1] + output[u,v+1] + output[u-1,v]) / 4) # like convelution. get Mes from neighbor
             else:
                 output[u,v] = output[u,v]

@@ -13,9 +13,19 @@ def shear(angle, x, y):
 
     new_x = round(x-y*tangent)
     new_y = y
- 
+    
+    """
+    need to caculater the new_y first
+    that is wrong in following 
+    --->
+    new_x = round(new_x-new_y*tangent)     
+    new_y = round(new_x*math.sin(angle)+new_y)
+
+    """
+    
+    new_y = round(new_x*math.sin(angle)+new_y)      #new_y input to the next new_x
     new_x = round(new_x-new_y*tangent)              #since there is no change in new_y according to the shear matrix
-    new_y = round(new_x*math.sin(angle)+new_y)      #since there is no change in new_x according to the shear matrix
+
     
     return new_y, new_x
 
@@ -28,7 +38,7 @@ def shear_No_tan(angle, x, y):
 
 image = cv2.imread(r"C:\Users\user\Desktop\Software\Python_3.12\git_test\Test_20210121\lena.bmp")[:,:,0]
 print(image.shape)
-angle = -int(input("Enter the angle :-")) # Ask the user to enter the angle of rotation
+angle = int(input("Enter the angle :")) # Ask the user to enter the angle of rotation
 
 angle = math.radians(angle) #change angle to radian 弳度. 
 cosine = math.cos(angle)
@@ -63,11 +73,19 @@ if __name__ == "__main__":
             x=j
             """
             
-            #new_y, new_x = shear_No_tan(angle,x,y) #did't useing tan
-            new_y,new_x = shear(angle,x,y) #Usign tan
+            new_y, new_x = shear_No_tan(angle,x,y) #did't useing tan
+            # new_y,new_x = shear(angle,x,y) #Usign tan
             new_y = new_centre_height - new_y
             new_x = new_centre_width - new_x
             output[new_y,new_x]=image[i,j]  #writing the pixels to the new destination in the output image
+            
+    for u in range(new_height):
+        for v in range(new_width):
+            if output[u,v] == 0 and u-1 >= 0 and v-1 >= 0 and u+1 <= 724 and v+1 <= 724:
+                output[u,v] = round((output[u+1,v] + output[u,v-1] + output[u,v+1] + output[u-1,v]) / 4) # like convelution. get Mes from neighbor
+            else:
+                output[u,v] = output[u,v]
 
-#cv2.imwrite(r'C:\Users\user\Desktop\Software\Python_3.12\git_test\Test_20210121\rotated_image.png',output.astype(np.uint8))
-cv2.imwrite(r'C:\Users\user\Desktop\Software\Python_3.12\git_test\Test_20210121\rotated_image1.png',output.astype(np.uint8))
+                    
+cv2.imwrite(r'C:\Users\user\Desktop\Software\Python_3.12\git_test\Test_20210121\rotated_image.png',output.astype(np.uint8))
+# cv2.imwrite(r'C:\Users\user\Desktop\Software\Python_3.12\git_test\Test_20210121\rotated_image1.png',output.astype(np.uint8))

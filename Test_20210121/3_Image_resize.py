@@ -2,11 +2,15 @@ import numpy as np
 import cv2
 import math
 
-height = 600
-width = 800
+
+
+height = int(input("Height= "))
+width = int(input("Width= "))
+# height = 600
+# width = 800
 
 output = np.zeros([height,width],dtype='uint8')
-img = cv2.imread(r"C:\Users\NTNU-TA410\Desktop\Test_20210121\Result\rotated_image.png")[:,:,0]
+img = cv2.imread(r"C:\Users\user\Desktop\Software\Python_3.12\git_test\Test_20210121\lena.bmp")[:,:,0]
 h,w = img.shape
 
 for H_y in range(height):
@@ -48,4 +52,4 @@ for H_y in range(height):
                           + u*(1-v)*int(img[x3, y3]) \
                           + u*v*int(img[x4, y4])
 
-cv2.imwrite(r'C:\Users\NTNU-TA410\Desktop\Test_20210121\Result\rotated_image22.png',output.astype(np.uint8))
+cv2.imwrite(r"C:\Users\user\Desktop\Software\Python_3.12\git_test\Test_20210121\resize.png",output.astype(np.uint8))
